@@ -11,7 +11,7 @@ class TaskStatus(str, Enum):
 
 
 class EmailTask(Base):
-    __tablename__ == "email_tasks"
+    __tablename__ = "email_tasks"
 
     id: Mapped[int] = mapped_column(primary_key=True)
     to: Mapped[str] = mapped_column(nullable=False)

@@ -15,7 +15,7 @@ async def proccess_email_task(task_id: str):
     async with async_session_generator() as session:
         task = await session.get(EmailTask, task_id)
         if not task:
-            return None
+            return
         task.status = TaskStatus.PROCESSING
         await session.commit()
 
@@ -35,7 +35,8 @@ async def proccess_email_task(task_id: str):
             )
             task.status = TaskStatus.COMPLETED
             task.updated_at = func.now()
-        except Exception as e:
+            await session.commit()
+        except Exception:
             task.status = TaskStatus.FAILED
             await session.commit()
             retry_after = min(60 * (task.retry_count + 1), 300)

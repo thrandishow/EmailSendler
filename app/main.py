@@ -15,9 +15,7 @@ async def startup():
     asyncio.create_task(email_worker())  # Запускаем воркер
 
 
-app.post("/send-email")
-
-
+@app.post("/send-email")
 async def send_email(to: str, subject: str, body: str, is_html: bool = False):
     # Генерируем ID и сохраняем в БД
     task_id = str(uuid.uuid4())
@@ -33,7 +31,6 @@ async def send_email(to: str, subject: str, body: str, is_html: bool = False):
         session.add(task)
         await session.commit()
 
-    # Добавляем в очередь Redis
     redis = redis.Redis(connection_pool=redis_pool)
     await redis.rpush("email_queue", task_id)
 
