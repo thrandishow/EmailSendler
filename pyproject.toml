@@ -10,7 +10,8 @@ requires-python = ">=3.12"
 dependencies = [
     "fastapi[all] (>=0.116.1,<0.117.0)",
     "uvicorn (>=0.35.0,<0.36.0)",
-    "aiosmtplib (>=4.0.2,<5.0.0)"
+    "aiosmtplib (>=4.0.2,<5.0.0)",
+    "dotenv (>=0.9.9,<0.10.0)",
 ]
 
 
